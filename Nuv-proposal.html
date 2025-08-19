@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUV Career Readiness Assessment System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #00a693 0%, #0e7c7b 50%, #1a5f5f 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            border-top: 5px solid #00a693;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #00a693, #0e7c7b, #1a5f5f);
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0e7c7b;
+        }
+        
+        .header h1 {
+            color: #1a5f5f;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            color: #0e7c7b;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .tagline {
+            font-style: italic;
+            color: #00a693;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .nav-tab {
+            background: linear-gradient(145deg, #00a693, #0e7c7b);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .nav-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: linear-gradient(145deg, #0e7c7b, #1a5f5f);
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(145deg, #1a5f5f, #0e7c7b);
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(26, 95, 95, 0.4);
+        }
+        
+        .tab-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease-in-out;
+            border-left: 5px solid #00a693;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: linear-gradient(145deg, #f0fffe, #e6fffc);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #00a693;
+            position: relative;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00a693, #0e7c7b);
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 166, 147, 0.15);
+        }
+        
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a5f5f;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            color: #0e7c7b;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .phase-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .phase-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid #00a693;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 166, 147, 0.15);
+        }
+        
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00a693, #0e7c7b, #1a5f5f);
+        }
+        
+        .phase-number {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: linear-gradient(145deg, #00a693, #0e7c7b);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0, 166, 147, 0.3);
+        }
+        
+        .phase-title {
+            color: #1a5f5f;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .phase-description {
+            color: #0e7c7b;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .demo-button {
+            background: linear-gradient(145deg, #00a693, #0e7c7b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 166, 147, 0.3);
+            background: linear-gradient(145deg, #0e7c7b, #1a5f5f);
+        }
+        
+        .roi-calculator {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid #00a693;
+        }
+        
+        .calculator-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .control-group label {
+            font-weight: 600;
+            color: #1a5f5f;
+            margin-bottom: 5px;
+        }
+        
+        .control-group input,
+        .control-group select {
+            padding: 10px;
+            border: 2px solid #e6fffc;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .control-group input:focus,
+        .control-group select:focus {
+            outline: none;
+            border-color: #00a693;
+            box-shadow: 0 0 0 3px rgba(0, 166, 147, 0.1);
+        }
+        
+        .roi-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 25px;
+            background: linear-gradient(145deg, #f0fffe, #e6fffc);
+            border-radius: 10px;
+            border-left: 4px solid #00a693;
+        }
+        
+        .roi-item {
+            text-align: center;
+        }
+        
+        .roi-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a5f5f;
+            margin-bottom: 5px;
+        }
+        
+        .roi-label {
+            color: #0e7c7b;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .timeline-marker {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(145deg, #00a693, #0e7c7b);
+            border-radius: 50%;
+            margin-right: 20px;
+            margin-top: 5px;
+            box-shadow: 0 3px 10px rgba(0, 166, 147, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .timeline-item:not(:last-child) .timeline-marker::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(180deg, #00a693, #0e7c7b);
+        }
+        
+        .timeline-content {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 3px solid #00a693;
+        }
+        
+        .timeline-title {
+            color: #1a5f5f;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-description {
+            color: #0e7c7b;
+            line-height: 1.6;
+        }
+        
+        .competitive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .competitive-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid #00a693;
+        }
+        
+        .competitive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 166, 147, 0.15);
+        }
+        
+        .competitive-title {
+            color: #1a5f5f;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .competitive-description {
+            color: #0e7c7b;
+            line-height: 1.6;
+        }
+        
+        .assessment-demo {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border-left: 4px solid #00a693;
+        }
+        
+        .question {
+            margin-bottom: 20px;
+        }
+        
+        .question-text {
+            color: #1a5f5f;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .option {
+            padding: 10px 15px;
+            background: #f0fffe;
+            border: 2px solid #e6fffc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            border-color: #00a693;
+            background: #e6fffc;
+        }
+        
+        .option.selected {
+            border-color: #00a693;
+            background: linear-gradient(145deg, #e6fffc, #d1fff9);
+            color: #1a5f5f;
+            font-weight: 600;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e6fffc;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00a693, #0e7c7b);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .phase-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-section">
+                <div class="logo-text">🏛️ SKiLL सारथी</div>
+            </div>
+            <h1>Career Readiness Assessment System</h1>
+            <p>Comprehensive 3-Phase Solution for MBA Placement Excellence</p>
+            <div class="tagline">Transforming Lives, Building Nation</div>
+            
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showTab('overview')">Executive Overview</button>
+                <button class="nav-tab" onclick="showTab('system')">System Demo</button>
+                <button class="nav-tab" onclick="showTab('advantage')">Competitive Edge</button>
+            </div>
+        </div>
+
+        <!-- Executive Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <h2 style="color: #1a5f5f; text-align: center; margin-bottom: 30px; font-size: 2rem;">Background & Rationale</h2>
+            
+            <div style="background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border-left: 5px solid #00a693;">
+                <p style="color: #0e7c7b; font-size: 1.1rem; line-height: 1.7; margin-bottom: 20px;">
+                    In today's competitive placement environment, MBA graduates are evaluated not only on theoretical knowledge but also on <strong>aptitude, role-fit, and industry readiness</strong>. Companies increasingly expect candidates to demonstrate:
+                </p>
+                <ul style="color: #0e7c7b; font-size: 1.1rem; line-height: 1.8; margin-left: 20px; margin-bottom: 20px;">
+                    <li>Strong <strong>aptitude and reasoning abilities</strong></li>
+                    <li>Clear alignment of <strong>traits and strengths with career roles</strong></li>
+                    <li>Practical <strong>role-specific knowledge and readiness</strong> before hiring</li>
+                </ul>
+                <p style="color: #0e7c7b; font-size: 1.1rem; line-height: 1.7;">
+                    To ensure our MBA students are well-prepared for placements by the beginning of their 3rd semester, we propose a <strong>3-Phase Comprehensive Career Readiness Assessment System</strong>. This initiative will enhance student preparedness, strengthen placement outcomes, and position NUV as a pioneer in scientific career readiness.
+                </p>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">3</div>
+                    <div class="metric-label">Assessment Phases</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">10</div>
+                    <div class="metric-label">Month Action Plan</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">100%</div>
+                    <div class="metric-label">Student Coverage</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">3rd</div>
+                    <div class="metric-label">Semester Readiness</div>
+                </div>
+            </div>
+
+            <h3 style="color: #1a5f5f; margin-bottom: 20px;">Benefits to NUV</h3>
+            <div class="competitive-grid">
+                <div class="competitive-card">
+                    <div class="competitive-title">👨‍🎓 For Students</div>
+                    <div class="competitive-description">
+                        <ul style="margin: 0; padding-left: 20px; color: #0e7c7b; line-height: 1.6;">
+                            <li>Early identification of strengths and gaps</li>
+                            <li>Clear roadmap for skill-building and certifications</li>
+                            <li>Higher placement confidence and role clarity</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="competitive-card">
+                    <div class="competitive-title">🎯 For Placement Cell (TPO)</div>
+                    <div class="competitive-description">
+                        <ul style="margin: 0; padding-left: 20px; color: #0e7c7b; line-height: 1.6;">
+                            <li>Scientific method to align students with recruiters' needs</li>
+                            <li>Improved placement conversion ratio</li>
+                            <li>Stronger recruiter trust and relationships</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="competitive-card">
+                    <div class="competitive-title">🏢 For NUV Management</div>
+                    <div class="competitive-description">
+                        <ul style="margin: 0; padding-left: 20px; color: #0e7c7b; line-height: 1.6;">
+                            <li>Unique positioning among MBA institutes in Gujarat</li>
+                            <li>Enhanced academic credibility and student outcomes</li>
+                            <li>Tangible improvement in <strong>placements, alumni success, and brand value</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Demo Tab -->
+        <div id="system" class="tab-content">
+            <h2 style="color: #1a5f5f; text-align: center; margin-bottom: 30px; font-size: 2rem;">Proposed 3-Phase System</h2>
+            
+            <div class="phase-container">
+                <div class="phase-card">
+                    <div class="phase-number">1</div>
+                    <div class="phase-title">Aptitude, Verbal & Reasoning Assessment</div>
+                    <div class="phase-description">
+                        <strong>Format:</strong> Standardized online test (Quantitative, Verbal, Logical Reasoning).<br><br>
+                        <strong>Purpose:</strong> Benchmark students against placement test standards.<br><br>
+                        <strong>Outcome:</strong> Identify skill gaps and provide focused training modules.
+                    </div>
+                    <button class="demo-button" onclick="startDemo('aptitude')">Try Sample Questions</button>
+                </div>
+                
+                <div class="phase-card">
+                    <div class="phase-number">2</div>
+                    <div class="phase-title">Psychometric Assessment</div>
+                    <div class="phase-description">
+                        <strong>Framework:</strong> Based on global models (Big Five, RIASEC, etc.).<br><br>
+                        <strong>Purpose:</strong> Assess personality, interests, and work preferences to determine best-fit career domains (Finance, Marketing, Analytics, HR, Consulting, Operations, etc.).<br><br>
+                        <strong>Outcome:</strong> Students receive a <strong>career-role recommendation report</strong> with fit scores.
+                    </div>
+                    <button class="demo-button" onclick="startDemo('psychometric')">Experience Assessment</button>
+                </div>
+                
+                <div class="phase-card">
+                    <div class="phase-number">3</div>
+                    <div class="phase-title">Role-Specific Readiness Assessment</div>
+                    <div class="phase-description">
+                        <strong>Example:</strong> For a student aligned to <strong>Financial Analyst</strong>, a 20–30 question domain test will assess technical, theoretical, and market knowledge.<br><br>
+                        <strong>Purpose:</strong> Evaluate current industry readiness level.<br><br>
+                        <strong>Outcome:</strong> Each student receives a <strong>10-month personalized action plan</strong> covering:
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Domain knowledge building</li>
+                            <li>Relevant certifications</li>
+                            <li>Skill development roadmap</li>
+                            <li>Practical exposure activities</li>
+                        </ul>
+                    </div>
+                    <button class="demo-button" onclick="startDemo('rolespecific')">Experience Assessment</button>
+                </div>
+            </div>
+
+            <!-- Demo Area -->
+            <div id="demoArea" style="display: none;">
+                <div class="assessment-demo">
+                    <h3 id="demoTitle" style="color: #1a5f5f; margin-bottom: 20px;"></h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div id="demoContent"></div>
+                    <button class="demo-button" onclick="nextQuestion()" id="nextBtn" style="margin-top: 20px;">Next Question</button>
+                    <button class="demo-button" onclick="closeDemoAcademic()" style="margin-top: 20px; margin-left: 10px; background: #666;">Close Demo</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROI Calculator Tab -->
+        <div id="roi" class="tab-content">
+        </div>
+
+        <!-- Implementation Timeline Tab -->
+        <div id="implementation" class="tab-content">
+        </div>
+
+        <!-- Competitive Advantage Tab -->
+        <div id="advantage" class="tab-content">
+            <h2 style="color: #1a5f5f; text-align: center; margin-bottom: 30px; font-size: 2rem;">Conclusion & Strategic Value</h2>
+            
+            <div style="background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border-left: 5px solid #00a693; text-align: center;">
+                <h3 style="color: #1a5f5f; margin-bottom: 20px; font-size: 1.5rem;">Vision Statement</h3>
+                <p style="color: #0e7c7b; font-size: 1.2rem; line-height: 1.7; font-weight: 500;">
+                    This <strong>3-Phase Career Readiness System</strong> will ensure that NUV MBA students are not only placed but placed in roles where they can thrive and grow. It bridges the gap between classroom learning and market expectations, creating a win-win for students, recruiters, and the university.
+                </p>
+            </div>
+            
+            <div class="competitive-grid">
+                <div class="competitive-card">
+                    <div class="competitive-title">🎯 Pioneer Status in Gujarat</div>
+                    <div class="competitive-description">
+                        Position NUV as the first MBA institute in Gujarat with a comprehensive, scientific career readiness assessment system, attracting top-tier students and industry attention.
+                    </div>
+                </div>
+                
+                <div class="competitive-card">
+                    <div class="competitive-title">📊 Evidence-Based Outcomes</div>
+                    <div class="competitive-description">
+                        Transform placement approach from traditional methods to data-driven, scientific assessment with measurable outcomes and predictable success rates for stakeholders.
+                    </div>
+                </div>
+                
+                <div class="competitive-card">
+                    <div class="competitive-title">🤝 Stronger Industry Partnerships</div>
+                    <div class="competitive-description">
+                        Provide recruiters with pre-assessed, role-fit candidates who have demonstrated readiness, building stronger industry relationships and repeat hiring commitments.
+                    </div>
+                </div>
+                
+                <div class="competitive-card">
+                    <div class="competitive-title">🏆 Academic Excellence Recognition</div>
+                    <div class="competitive-description">
+                        Enhanced academic credibility through innovative assessment methodologies, positioning NUV for national recognition and awards in management education.
+                    </div>
+                </div>
+                
+                <div class="competitive-card">
+                    <div class="competitive-title">💰 Tangible ROI & Brand Value</div>
+                    <div class="competitive-description">
+                        Measurable improvements in placement rates, alumni success stories, and enhanced brand reputation leading to increased admissions and revenue growth.
+                    </div>
+                </div>
+                
+                <div class="competitive-card">
+                    <div class="competitive-title">🎓 Sustainable Success Ecosystem</div>
+                    <div class="competitive-description">
+                        Create a positive feedback loop where successful alumni become brand ambassadors, attracting better students and creating a sustainable competitive advantage.
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(145deg, #f0fffe, #e6fffc); padding: 30px; border-radius: 15px; margin-top: 30px; text-align: center; border: 2px solid #00a693;">
+                <h3 style="color: #1a5f5f; margin-bottom: 15px;">Ready to Transform NUV's Placement Success?</h3>
+                <p style="color: #0e7c7b; font-size: 1.1rem; line-height: 1.6;">
+                    This comprehensive system represents more than just an assessment tool—it's a strategic investment in NUV's future as a leading management education institution in Gujarat and beyond.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Management
+        function showTab(tabId) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.nav-tab');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Demo System
+        let currentDemo = '';
+        let currentQuestion = 0;
+        const demoData = {
+            aptitude: {
+                title: 'Sample Aptitude Questions',
+                questions: [
+                    {
+                        text: 'If a train travels 120 km in 2 hours, what is its average speed?',
+                        options: ['50 km/h', '60 km/h', '70 km/h', '80 km/h'],
+                        correct: 1
+                    },
+                    {
+                        text: 'Complete the series: 2, 4, 8, 16, ?',
+                        options: ['24', '32', '28', '20'],
+                        correct: 1
+                    },
+                    {
+                        text: 'Choose the word that is most similar to "Meticulous"',
+                        options: ['Careless', 'Detailed', 'Quick', 'Simple'],
+                        correct: 1
+                    }
+                ]
+            },
+            psychometric: {
+                title: 'Sample Personality Assessment',
+                questions: [
+                    {
+                        text: 'You have 3 promising business ideas in hand. What do you do?',
+                        options: [
+                            'I\'ll evaluate which idea is easiest to pivot if the market changes.',
+                            'I\'ll analyze each idea\'s potential based on data, cost, and market trends.',
+                            'I\'ll choose the idea that excites potential co-founders and gets them onboard.',
+                            'I\'ll involve peers in a brainstorming session to weigh pros and cons of each idea.',
+                            'I\'ll select the idea that best aligns with what my target customer needs right now.'
+                        ],
+                        correct: -1
+                    },
+                    {
+                        text: 'You can afford to hire just one person. What\'s your priority?',
+                        options: [
+                            'I\'ll hire someone comfortable with multiple roles — flexibility is key right now.',
+                            'I\'ll choose someone who can execute fast and deliver early wins.',
+                            'I\'ll look for someone who brings a fresh perspective and unconventional thinking.',
+                            'I\'ll prioritize someone who can keep the team spirit alive and resolve tension.',
+                            'I\'ll focus on hiring someone strong in operations and negotiation.'
+                        ],
+                        correct: -1
+                    },
+                    {
+                        text: 'You\'re burning out trying to manage everything yourself. What do you do?',
+                        options: [
+                            'I\'ll take a break, reflect, and prioritize better to avoid breakdown.',
+                            'I\'ll delegate low-priority tasks and focus on strategic decisions.',
+                            'I\'ll ask for help from my network and assign temporary roles smartly.',
+                            'I\'ll adapt my schedule, cut friction points, and rework routines to stay efficient.',
+                            'I\'ll define top 3 goals and attack them with laser focus.'
+                        ],
+                        correct: -1
+                    }
+                ]
+            },
+            rolespecific: {
+                title: 'Sample Financial Analyst Assessment',
+                questions: [
+                    {
+                        text: 'What does ROI stand for in financial analysis?',
+                        options: ['Return on Investment', 'Rate of Interest', 'Risk of Investment', 'Revenue over Income'],
+                        correct: 0
+                    },
+                    {
+                        text: 'Which financial ratio measures a company\'s ability to pay short-term debts?',
+                        options: ['Debt-to-Equity', 'Current Ratio', 'Price-to-Earnings', 'Return on Assets'],
+                        correct: 1
+                    },
+                    {
+                        text: 'In DCF analysis, what does NPV represent?',
+                        options: ['Net Present Value', 'Net Profit Variance', 'New Product Value', 'Normal Price Variation'],
+                        correct: 0
+                    }
+                ]
+            }
+        };
+
+        function startDemo(type) {
+            currentDemo = type;
+            currentQuestion = 0;
+            document.getElementById('demoArea').style.display = 'block';
+            document.getElementById('demoTitle').textContent = demoData[type].title;
+            showQuestion();
+            updateProgress();
+        }
+
+        function showQuestion() {
+            const question = demoData[currentDemo].questions[currentQuestion];
+            const content = document.getElementById('demoContent');
+            
+            content.innerHTML = `
+                <div class="question">
+                    <div class="question-text">${currentQuestion + 1}. ${question.text}</div>
+                    <div class="options">
+                        ${question.options.map((option, index) => 
+                            `<div class="option" onclick="selectOption(${index})">${option}</div>`
+                        ).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(index) {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => option.classList.remove('selected'));
+            options[index].classList.add('selected');
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < demoData[currentDemo].questions.length) {
+                showQuestion();
+                updateProgress();
+            } else {
+                showResults();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / demoData[currentDemo].questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function showResults() {
+            const content = document.getElementById('demoContent');
+            content.innerHTML = `
+                <div style="text-align: center; padding: 30px;">
+                    <h3 style="color: #1a5f5f; margin-bottom: 20px;">Assessment Complete!</h3>
+                    <p style="color: #0e7c7b; margin-bottom: 20px;">
+                        This was a sample demonstration. In the actual system, students would receive:
+                    </p>
+                    <div style="text-align: left; max-width: 500px; margin: 0 auto;">
+                        <ul style="color: #0e7c7b; line-height: 1.8;">
+                            <li>Detailed performance analysis</li>
+                            <li>Skill gap identification</li>
+                            <li>Personalized improvement recommendations</li>
+                            <li>Career fit scoring and role suggestions</li>
+                            <li>10-month development action plan</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        function closeDemoAcademic() {
+            document.getElementById('demoArea').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'block';
+        }
+
+        // ROI Calculator
+        function calculateROI() {
+            // Removed ROI calculator functionality
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Removed ROI calculator initialization
+        });
+
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate metric cards on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 0.6s ease-out';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.metric-card, .phase-card, .competitive-card').forEach((card) => {
+                observer.observe(card);
+            });
+
+            // Add hover effects to interactive elements
+            document.querySelectorAll('.demo-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateY(-2px)';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
